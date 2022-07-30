@@ -9,10 +9,4 @@ class HandleFlakyTests
         $flakyTestsOutputFile = fopen(self::FLAKY_TESTS_PATH, 'a');
         fwrite($flakyTestsOutputFile, trim($testFilePath, "\n") . "\n");
     }
-
-    public function postToSlack(): void
-    {
-        echo 'Posting to slack...' . "\n";
-    }
-
 }
