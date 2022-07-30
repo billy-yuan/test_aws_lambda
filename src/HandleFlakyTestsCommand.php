@@ -19,9 +19,9 @@ class HandleFlakyTestsCommand
 
     public function execute(): void
     {
-        $failedTestsFromFirstRun = explode("\n", file_get_contents(self::FAILED_TESTS_FROM_RERUN_PATH));
+        $failedTestsFromRerun = explode("\n", file_get_contents(self::FAILED_TESTS_FROM_RERUN_PATH));
 
-        foreach ($failedTestsFromFirstRun as $failedTestPath) {
+        foreach ($failedTestsFromRerun as $failedTestPath) {
             if ($this->flakyTestsQueryService->isTestFlaky($failedTestPath)) {
                 $this->handleFlakyTests->writeToFile($failedTestPath);
             }
