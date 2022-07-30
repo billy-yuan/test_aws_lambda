@@ -2,6 +2,7 @@
 
 include_once 'HandleFlakyTests.php';
 include_once 'FlakyTestsQueryService.php';
+include_once 'HandleFailedTests.php';
 
 class HandleFlakyTestsCommand
 {
@@ -24,13 +25,11 @@ class HandleFlakyTestsCommand
         foreach ($failedTestsFromRerun as $failedTestPath) {
             if ($this->flakyTestsQueryService->isTestFlaky($failedTestPath)) {
                 $this->handleFlakyTests->writeToFile($failedTestPath);
+            } else {
+                $this->handleFailedTests->writeToFile($failedTestPath);
             }
         }
 
-        $this->handleFlakyTests->postToSlack();
+        // remove
     }
 }
-
-$handleFlakyTests = new HandleFlakyTests();
-$flakyTestsQueryService = new FlakyTestsQueryService();
-(new HandleFlakyTestsCommand($handleFlakyTests, $flakyTestsQueryService))->execute();
